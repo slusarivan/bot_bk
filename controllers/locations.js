@@ -1,21 +1,13 @@
-const Joi = require('joi')
-
-const locationOperation = require('../models/locations')
-
-const joiSchema = Joi.object({
-  lat: Joi.required(),
-  lon: Joi.required(),
-  date: Joi.required()
-})
+const {location} = require('../models')
 
 const addLocation = async (req, res, next) => {
   try {
-    const { error } = joiSchema.validate(req.body)
+    const { error } = location.joiSchema.validate(req.body)
 
     if (error) {
       console.log(error.message)
     }
-    const result = await locationOperation(req.body)
+    const result = await location.Location.create(req.body)
     res.status(201).json({
       status: "success",
       code: 201,

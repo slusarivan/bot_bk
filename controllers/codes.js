@@ -1,20 +1,13 @@
-const Joi = require('joi')
-
-const codeOperation = require('../models/codes')
-
-const joiSchema = Joi.object({
-  code: Joi.required(),
-  date: Joi.required()
-})
+const {code} = require('../models')
 
 const addCode = async (req, res, next) => {
   try {
-    const { error } = joiSchema.validate(req.body)
+    const { error } = code.joiSchema.validate(req.body)
 
     if (error) {
       console.log(error.message)
     }
-    const result = await codeOperation(req.body)
+    const result = await code.Code.create(req.body)
     res.status(201).json({
       status: "success",
       code: 201,
